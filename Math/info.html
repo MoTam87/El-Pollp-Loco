@@ -1,0 +1,100 @@
+** Gravity **
+
+- wir brauchen 2 Variablen SpeedY => Um wie viel px der Character nach unten fällt und acceleration (beschleunigung)
+1 - das y im character verringern so das er in der Luft schwebt
+2 - SpeedY = 0 und acceleration = 1 (Beispiel)
+3 - eine Function erstellen applyGravity() im movable-object.class.js
+
+
+** Jump animationen anzeigen **
+
+1 - Im character.class.js einen Array erstellen IMAGES_JUMPING, dort werden als Grafiken eingefügt
+2 - Im constructor die loadImages Function mit dem Parameter des Arrays IMAGES_JUMPING einfügen
+3 - Im character.class.js eine If Abfrage im setInterval (dort wo die walk animation ausgeführt wird) 
+    + wenn sich der character in der Luft befindet sollen die Grafiken geloadet werden
+
+
+** Springen (Jumping) /beim halten der Taste bleibt der character in der Luft **
+
+1 - Eine If Abfrage im character.class.js in der setInterval(...keyboard) erstellen 
+    + Wenn this.world.keyboard.UP gedrückt wird dann SpeedY erhöhen
+2 - Die If Abfrage ergänzen in der Function applyGravity() ( || wenn speedY > 0)
+
+*character soll einmal springen beim einem klick und wieder auf dem Boden landen
+    1 - im character.class.js die if Abfrage (...keyboard) ergänzen um  => && und nicht über den boden
+- 
+
+
+** Collision ( Elemente im Canvas dürfen nicht ineinander laufen sondern colledieren )**
+
+1 - w3schools.com => canvas rect() Method und den code Kopieren und fügen es in addToMap() ein
+  + ctx.beginPath();
+    ctx.lineWidth = "10";
+    ctx.strokeStyle = "blue";
+    ctx.rect(50, 50, 150, 80);
+    ctx.stroke();
+2 - wir müssen noch /this.ctx.rect(50, 50, 150, 80)/ die Parameter ergänzen von unseren Objekten von this.ctx.drawImage(...)
+3 - wir Lager alles in movable-object => drawFrame(ctx) und draw(ctx)
+4 - zu der drawFrame(ctx) fügen wir eine If Abfrage dass die Function ausgeführt wird an unsere gegebenen Instanzen
+5 - nun checken wir ab ob unsere Elemente kollidieren haben oder nicht
+    in der movable-object => isColliding(mo) {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x + mo.width &&
+            this.y < mo.y + mo.height;
+    }
+    und machen in der world datei die Abfrage (im constructor) checkCollistions()
+    dann erstellen wir eine Funktion die checkt ob unser character mit einem Huhn Kolidiert ist checkCollistions()
+6 - Nun legen wir eine Variable ENERGY im movable.js
+7 - Erstellen eine Funktion checkCollistions() in der WORLD Datei hit(); diese wird im movable.js ausgelagert 
+8 - Die Funktion isDead() wird im movable.js definiert und gibt den wert von energy wenn der character Tot ist
+9 - In der character.js definieren wir die Grafiken der TotAnimation in der Vari IMAGES_DEAD und landen diese im 
+    constructor loadImages.... und machen eine IF Abfrage um den Tot in der Funtion animate zu simulieren
+10 - Verletzung Simulation => erst die Grafiken im character definieren dann im constructor loadImages laden und 
+     und die Animation in der Funktion ANIMATE in der If Abfrage aufrufen
+11 - Erstellen eine isHurt Funktion im movable.js die uns den Wert True oder false zurück gibt
+     in dieser wird der Zeitpunkt gespeichert in dem der Character verletzt wurde und wenn das 1 Sekunde in der 
+     Vergangenheit liegt soll die Animation ausgeführt werden
+     - Variable lastHit = 0 in movable.js definieren 
+     - in der Hit Funktion die Zeit speicher in der der Character verletzt wurde 
+
+
+** StatusBars **
+
+1 - Zwei neu js Dateien erstellen die Drawable.class.js für alle Status bars und eine Datei für die StatusBar
+    - in der HTML Datei verlinken
+    - drawable-object.class.js bekommt class DrawableObject
+    - status-bar.class.js bekommt class StatusBar extends DrawableObject
+2 - Impotieren alle Variablen und Funktionen die nicht für bewegende Objekte zuständig sind in die neue Drawable Datei
+3 - Definieren ein Array mit allen Grafiken 
+4 - Laden diese im Constructor 
+5 - Erstellen eine Variable mit dem Standardwert 100 der nachher reduziert werden muss
+6 - Erstellen eine Funktion resolveImageIndex() die uns das index der Graafik bei einem der Werte (LEBEN) zurück gibt
+7 - Dann eine Funktion setPercentage(percentage) die den Prozent neu definiert, eine Vari um den Pfad 
+    der jeweiligen Grafik gibt und eine Vari in der dieser in img gespeichert wird um es anzuzeigen
+8 - StatusBar in World definieren new StatusBar() 
+9 - um diese Bar anzuzeigen muss sie im draw definiert werden addToMap()
+10 - Statusbar FixPosition :  Im World in der draw Funktion muss vor die Statusbar die Cam zurück und danach muss cam viewport
+11 - Im World dann den Schaden zur der Funktion setPercentage(percentage) in der Funktion checkCollistions einfügen
+
+
+** Flaschen **
+
+1 - Erstellen eine neue JS Datei und verlinken diese im index
+2 - die neue JS Datei throwable-object.class.js bekommt die class extends to movable-object
+3 - definieren die Vari (D) im keyboard.js 
+4 -  Suchen auf google die Keyboard Nummer von (D) => 68 und tragen diese in der game.js als true und false ein
+5 - in world eine neue Vari definieren mit dem Wert Array (weil mehrere Flaschen später eingefügt werden) 
+6 - in der draw() als addObjectsToMap definieren
+7 - in der Class Datei die constructor Funktion aufrufen : x und y angeben als Position und super() mit load bottle eingeben
+8 - die Größe der Flasche anpassen mit height und width 
+
+9 - WERF METHODE => 1 - throw() erstellen mit den Parameter x und y die korrdinaten wo der Character sich befindet
+                    2 - Die Werte diser koordinaten übergeben wir an die Flasche weiter
+                    3 - Eine Geschwindigkeit um nach ober zu fliegen (speedY)
+                    4 - Damit die Flasche runter fällt fügen wir die Funktion applyGravity()
+                    5 - Fügen eine setInterval() damit die Flasche nach rechts fliegen kann
+                    6 - in der Datei movable-object muss die Funktion isAboveGround() angepasst werden damit die Flasche durchfällt
+                    7 - in world eine Funktion erstellen checkThrowableObjects() in der Function check() um eine Flasche zu werfen beim drücken auf D
+                    8 - in der Datei Throwable im Constructor die Parameter x und y geben und die Koordinaten nochmal zu x und y ändern
+                        - die Parameter in der Funktion throw() löschen und ebenfalls die Koordinaten 

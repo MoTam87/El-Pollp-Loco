@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/4_enemie_boss_chicken/3_attack/G13.png">
+    <title>El Pollo Loco</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./models/drawable-object.class.js"></script>
+    <script src="./models/movable-object.class.js"></script>
+    <script src="./models/character.class.js"></script>
+    <script src="./models/chicken.class.js"></script>
+    <script src="./models/secondChicken.class.js"></script>
+    <script src="./models/cloud.class.js"></script>
+    <script src="./models/status-bar.class.js"></script>
+    <script src="./models/status-bar-bottle.class.js"></script>
+    <script src="./models/status-bar-coins.class.js"></script>
+    <script src="./models/staus-bar-endboss.class.js"></script>
+    <script src="./models/coins-object.class.js"></script>
+    <script src="./models/bottles-object.js"></script>
+    <script src="./models/world.class.js"></script>
+    <script src="./models/background-object.class.js"></script>
+    <script src="./models/keyboard.class.js"></script>
+    <script src="./models/level.class.js"></script>
+    <script src="./models/endboss.class.js"></script>
+    <script src="./models/throwable-object.class.js"></script>
+    <script src="./levels/level1.js"></script>
+    <script src="./js/game.js"></script>
+
+</head>
+<body >
+    <div id="instructions" class="instructions displayNone">
+        <div id="howToPlay">
+            <h2>How To Play:</h2>
+            <table>
+                <tr>
+                    <td>Walk Left:</td>
+                    <td>Arrow Key Left</td>
+                </tr>
+                <tr>
+                    <td>Walk Right:</td>
+                    <td>Arrow Key Right</td>
+                </tr>
+                <tr>
+                    <td>Jump:</td>
+                    <td>Push Space</td>
+                </tr>
+                <tr>
+                    <td>Throw Bottle:</td>
+                    <td>Push Key [D]</td>
+                </tr>
+            </table>
+            <div>Collect Bottles to kill all your enemies. You can only use the bottles which you have collected</div>
+            <div>You can also kill your enemies by jumping on them</div>
+            <div>Kill the boss by throwing bottles on it</div>
+        </div>
+    </div>
+    <div id="rotate-screen"><img src="img/5_background/rotate.jpeg" alt=""></div>
+    <img id="image" src="img/9_intro_outro_screens/start/startscreen_1.png">
+    <button class="btn hvr-pulse-grow" onclick="init()" id="btn">Let's gooo</button>
+    <button class="btn3 displayNone hvr-pulse-grow" onclick="startGame()" id="btn3">Let's gooo</button>
+    <button class="btn2 hvr-pulse-grow" onclick="howPlay()" id="btn2">How to play</button>
+    <h1 id="titel">El Pollo Loco</h1>
+    <div class="allScreenContainer">       
+        <canvas id="canvas" height="480" width="750"></canvas>
+        <img class="gameoverScreen displayNone" id="gameoverScreen" src="img/9_intro_outro_screens/game_over/game over.png" alt="">
+        
+            <button id="playAgain" class="playAgain displayNone hvr-pulse-grow"><a href="./index.html">Play again</a></button>
+            <img class="youlostScreen displayNone" id="youlostScreen" src="img/9_intro_outro_screens/game_over/you lost.png" alt="">
+        
+        <div class="allPlayBtns" id="allPlayBtns">
+            <div class="playBtns leftAndRightBtns">
+                <img id="left" src="./img/1_editables/left.png" alt="">
+                <img id="right" src="./img/1_editables/right.png" alt="">
+            </div>
+            <div class="playBtns playBtnsAct">
+                <img id="throw" src="./img/1_editables/throw.png" alt="">
+                <img id="jump" src="./img/1_editables/jump.png" alt="">
+            </div>
+        </div>
+       
+        <div class="icons">
+            <img onclick="fullScreen()" class="soundOnIcon displayNone" id="fullScreen" src="img/5_background/iconmonstr-full-screen-lined-48.png" alt="">
+            <div id="soundIconContainer"><img onclick="soundOff()" class="soundOnIcon displayNone" id="soundOnIcon" src="img/5_background/soundOn.png" alt=""></div>
+            
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
